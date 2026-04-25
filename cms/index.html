@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tunakarya CMS</title>
+  <meta name="description" content="CMS untuk mengelola konten website Tunakarya">
+</head>
+<body>
+  <!-- Decap CMS -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+  <script>
+    // Konfigurasi tambahan untuk GitHub OAuth
+    // Pastikan CMS menggunakan branch 'patt' untuk commit
+    CMS.registerEventListener({
+      name: 'prePublish',
+      handler: ({ entry }) => {
+        console.log('Publishing entry:', entry.get('slug'));
+        return entry;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+local_backend: true
+
+backend:
+  name: github
+  repo: alfath-rizqiy/web-tunakarya
+  branch: patt
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+
+# CMS di-deploy dari branch 'cms', tapi commit ke branch 'patt'
+# Vercel akan auto-deploy frontend dari branch 'patt'
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  # ============================================
+  # COLLECTION: HERO / HOME SECTION
+  # Komponen Frontend: Home.jsx
+  # Props: title, subtitle, description, maskot_image
+  # ============================================
+  - name: "hero"
+    label: "Hero / Home Section"
+    folder: "content/hero"
+    create: true
+    slug: "{{title}}"
+    sortable_fields: ['order']
+    fields:
+      - { label: "Judul", name: "title", widget: "string", default: "Selamat Datang", required: true, hint: "Judul utama hero section" }
+      - { label: "Subtitle", name: "subtitle", widget: "string", required: false, hint: "Subtitle/tambahan judul (opsional)" }
+      - { label: "Deskripsi", name: "description", widget: "text", required: true, hint: "Deskripsi singkat di hero" }
+      - { label: "Gambar Maskot/Hero", name: "maskot_image", widget: "image", required: false, media_folder: "/public/uploads/hero", hint: "Gambar maskot atau ilustrasi hero" }
+      - { label: "Background Gradient", name: "bg_gradient", widget: "select", options: ["from-white via-sky-100 to-sky-300", "from-sky-100 via-sky-200 to-sky-300", "from-white to-sky-200"], default: "from-white via-sky-100 to-sky-300", hint: "Pilihan warna gradient background" }
+      - { label: "Urutan", name: "order", widget: "number", value_type: "int", default: 1, min: 0 }
+      - { label: "Aktif", name: "active", widget: "boolean", default: true }
+
+  # ============================================
+  # COLLECTION: STRUKTUR ORGANISASI
+  # Komponen Frontend: Card.jsx
+  # Props: image, name, role
+  # ============================================
+  - name: "struktur"
+    label: "Struktur Organisasi"
+    folder: "content/struktur"
+    create: true
+    slug: "{{title}}"
+    sortable_fields: ['order', 'title', 'role']
+    fields:
+      - { label: "Nama Lengkap", name: "title", widget: "string", required: true, hint: "Nama anggota struktur organisasi" }
+      - { label: "Role/Jabatan", name: "role", widget: "string", required: true, hint: "Contoh: Ketua, Wakil, Humas, Bendahara, dll" }
+      - { label: "Foto", name: "image", widget: "image", required: false, media_folder: "/public/uploads/struktur", hint: "Foto anggota organisasi (ratio 4:5 atau 1:1)" }
+      - { label: "Urutan Tampilan", name: "order", widget: "number", value_type: "int", default: 0, min: 0, hint: "Angka kecil = tampil pertama" }
+      - { label: "Tampilkan di Website", name: "active", widget: "boolean", default: true }
+      - { label: "Bio Singkat", name: "body", widget: "markdown", required: false, hint: "Deskripsi singkat tentang anggota (opsional)" }
+
+  # ============================================
+  # COLLECTION: PURNA KARYA (ALUMNI)
+  # Komponen Frontend: CardCom.jsx
+  # Props: profile, name, purna, quetes
+  # ============================================
+  - name: "purna"
+    label: "Purna Karya"
+    folder: "content/purna"
+    create: true
+    slug: "{{title}}-{{angkatan}}"
+    sortable_fields: ['order', 'angkatan', 'title']
+    view_filters:
+      - label: Aktif
+        field: active
+        pattern: true
+    fields:
+      - { label: "Nama Alumni", name: "title", widget: "string", required: true, hint: "Nama lengkap alumni" }
+      - { label: "Angkatan", name: "angkatan", widget: "string", required: true, hint: "Contoh: Angkatan 51, Angkatan 52, dll" }
+      - { label: "Foto Profile", name: "profile", widget: "image", required: false, media_folder: "/public/uploads/purna", hint: "Foto alumni (ratio 1:1 - bulat)" }
+      - { label: "Quotes/Testimoni", name: "quotes", widget: "text", required: true, hint: "Kesan/pesan singkat dari alumni" }
+      - { label: "Urutan Tampilan", name: "order", widget: "number", value_type: "int", default: 0, min: 0 }
+      - { label: "Tampilkan di Website", name: "active", widget: "boolean", default: true }
+      - { label: "Tahun Lulus", name: "lulus_year", widget: "string", required: false, hint: "Tahun lulus (opsional)" }
+
+  # ============================================
+  # COLLECTION: PROGRAM
+  # Komponen Frontend: CardPro.jsx
+  # Props: image, tittle, description
+  # ============================================
+  - name: "program"
+    label: "Program"
+    folder: "content/program"
+    create: true
+    slug: "{{title}}"
+    sortable_fields: ['order', 'title']
+    fields:
+      - { label: "Judul Program", name: "title", widget: "string", required: true, hint: "Nama program/kegiatan" }
+      - { label: "Gambar Utama", name: "image", widget: "image", required: false, media_folder: "/public/uploads/program", hint: "Gambar utama program (ratio 16:9)" }
+      - { label: "Deskripsi Singkat", name: "description", widget: "text", required: true, hint: "Deskripsi singkat yang muncul di card" }
+      - { label: "Konten Lengkap", name: "body", widget: "markdown", required: false, hint: "Konten lengkap program (opsional)" }
+      - { label: "Urutan Tampilan", name: "order", widget: "number", value_type: "int", default: 0, min: 0 }
+      - { label: "Tampilkan di Website", name: "active", widget: "boolean", default: true }
+      - { label: "Tanggal Program", name: "date", widget: "datetime", required: false, date_format: "YYYY-MM-DD", time_format: false, hint: "Tanggal pelaksanaan program (opsional)" }
+
+  # ============================================
+  # SETTINGS: GLOBAL SITE SETTINGS
+  # ============================================
+  - name: "settings"
+    label: "Pengaturan Website"
+    delete: false
+    files:
+      - name: "site"
+        label: "Pengaturan Umum"
+        file: "content/settings/site.json"
+        fields:
+          - { label: "Judul Website", name: "site_title", widget: "string", default: "Tunakarya" }
+          - { label: "Deskripsi Website", name: "site_description", widget: "text", default: "Website resmi organisasi Tunakarya" }
+          - { label: "Logo", name: "site_logo", widget: "image", required: false, media_folder: "/public/uploads" }
+          - { label: "Email Kontak", name: "contact_email", widget: "string", required: false }
+          - { label: "Link Instagram", name: "instagram_url", widget: "string", required: false }
+          - { label: "Link Facebook", name: "facebook_url", widget: "string", required: false }
+
+  # ============================================
+  # NAVIGATION EDITOR
+  # ============================================
+  - name: "navigation"
+    label: "Navigasi Menu"
+    delete: false
+    files:
+      - name: "menu"
+        label: "Menu Settings"
+        file: "content/settings/navigation.json"
+        fields:
+          - name: "menu_items"
+            label: "Menu Items"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Link (#id atau /path)", name: "url", widget: "string" }
+              - { label: "Urutan", name: "order", widget: "number", value_type: "int" }

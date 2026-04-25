@@ -1,0 +1,13 @@
+{
+  "name": "tunakarya-cms",
+  "version": "1.0.0",
+  "description": "Decap CMS for Tunakarya",
+  "scripts": {
+    "dev": "concurrently \"npx decap-server\" \"npx serve . -p 8080\"",
+    "cms": "npx decap-server",
+    "ui": "npx serve . -p 8080"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
