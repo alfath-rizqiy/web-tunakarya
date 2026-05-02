@@ -1,0 +1,46 @@
+name: Deploy Frontend to Vercel (patt)
+
+on:
+  push:
+    branches:
+      - patt
+    paths:
+      - "web-tunakarya/**"
+      - "content/**"
+      - ".github/workflows/deploy-frontend.yml"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: "web-tunakarya/package-lock.json"
+
+      - name: Install dependencies
+        working-directory: ./web-tunakarya
+        run: npm ci
+
+      - name: Run linter
+        working-directory: ./web-tunakarya
+        run: npm run lint
+
+      - name: Build frontend
+        working-directory: ./web-tunakarya
+        run: npm run build
+
+      - name: Deploy to Vercel
+        uses: vercel/action@v4
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: ./web-tunakarya

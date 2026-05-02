@@ -1,0 +1,57 @@
+# Frontend (web-tunakarya)
+web-tunakarya/node_modules/
+web-tunakarya/dist/
+web-tunakarya/.env
+web-tunakarya/.env.local
+web-tunakarya/.env.*.local
+web-tunakarya/.DS_Store
+web-tunakarya/package-lock.json
+
+# CMS
+cms/node_modules/
+cms/.env
+cms/.env.local
+cms/.DS_Store
+cms/package-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+*.iml
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime
+.vercel/
+.next/
+out/
+
+# Temporary
+tmp/
+temp/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Local backend for CMS dev
+cms/.netlify/
