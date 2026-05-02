@@ -2,10 +2,10 @@
 
 backend:
   name: github
-  repo: alfath-rizqiy/web-tunakarya
+  repo: RakaPrasetyaHidayat/web-tunakarya
   branch: patt
-  base_url: https://cms-staging-000111.vercel.app
-  auth_endpoint: api/auth
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
 
 # CMS di-deploy dari branch 'cms', tapi commit ke branch 'patt'
 # Vercel akan auto-deploy frontend dari branch 'patt'
