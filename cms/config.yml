@@ -35,6 +35,26 @@ collections:
       - { label: "Aktif", name: "active", widget: "boolean", default: true }
 
   # ============================================
+  # COLLECTION: CTA BUTTONS (CALL TO ACTION)
+  # Komponen Frontend: Home.jsx
+  # Props: label, link_type, link_url, whatsapp_number, active, order
+  # ============================================
+  - name: "cta"
+    label: "CTA Buttons / Tombol Aksi"
+    folder: "content/cta"
+    create: true
+    slug: "{{label}}"
+    sortable_fields: ['order']
+    fields:
+      - { label: "Label Tombol", name: "label", widget: "string", required: true, hint: "Teks yang muncul di tombol" }
+      - { label: "Tipe Link", name: "link_type", widget: "select", options: ["internal", "external", "whatsapp"], default: "internal", required: true, hint: "Pilih tipe link: internal (#id), external (URL), atau WhatsApp" }
+      - { label: "Link Internal/External", name: "link_url", widget: "string", required: false, hint: "Contoh: #about, https://example.com, atau kosongkan jika WhatsApp" }
+      - { label: "Nomor WhatsApp", name: "whatsapp_number", widget: "string", required: false, hint: "Contoh: 6281234567890 (hanya gunakan jika Tipe Link = WhatsApp)" }
+      - { label: "Varian Tombol", name: "variant", widget: "select", options: ["primary", "secondary", "outline", "ghost"], default: "primary", hint: "Pilihan style tombol" }
+      - { label: "Urutan Tampilan", name: "order", widget: "number", value_type: "int", default: 0, min: 0 }
+      - { label: "Tampilkan", name: "active", widget: "boolean", default: true, hint: "Centang untuk menampilkan tombol ini" }
+
+  # ============================================
   # COLLECTION: STRUKTUR ORGANISASI
   # Komponen Frontend: Card.jsx
   # Props: image, name, role
@@ -96,6 +116,33 @@ collections:
       - { label: "Urutan Tampilan", name: "order", widget: "number", value_type: "int", default: 0, min: 0 }
       - { label: "Tampilkan di Website", name: "active", widget: "boolean", default: true }
       - { label: "Tanggal Program", name: "date", widget: "datetime", required: false, date_format: "YYYY-MM-DD", time_format: false, hint: "Tanggal pelaksanaan program (opsional)" }
+
+  # ============================================
+  # COLLECTION: ANGKATAN (GENERASI/PERIODE)
+  # Komponen Frontend: Strukture.jsx, Angkatan.jsx
+  # Props: angkatan, image, status, members[]
+  # ============================================
+  - name: "angkatan"
+    label: "Angkatan/Periode"
+    folder: "content/angkatan"
+    create: true
+    slug: "{{title}}"
+    sortable_fields: ['order', 'title']
+    fields:
+      - { label: "Nama Angkatan", name: "title", widget: "string", required: true, hint: "Contoh: 50/14, 51/15, 52/16" }
+      - { label: "Gambar Background", name: "image", widget: "image", required: false, media_folder: "/public/uploads/angkatan", hint: "Gambar background angkatan" }
+      - { label: "Status", name: "status", widget: "string", required: true, hint: "Contoh: Demisoner, Aktif, dll", default: "Demisoner" }
+      - { label: "Deskripsi Angkatan", name: "description", widget: "text", required: false, hint: "Deskripsi singkat angkatan (opsional)" }
+      - { label: "Urutan Tampilan", name: "order", widget: "number", value_type: "int", default: 0, min: 0 }
+      - { label: "Tampilkan di Website", name: "active", widget: "boolean", default: true }
+      - name: "members"
+        label: "Anggota Angkatan"
+        widget: "list"
+        collapsed: true
+        fields:
+          - { label: "Nama", name: "nama", widget: "string", required: true }
+          - { label: "Bidang/Role", name: "bidang", widget: "string", required: true, hint: "Contoh: Ketua, Humas, Logistik, dll" }
+          - { label: "Foto", name: "image", widget: "image", required: false, media_folder: "/public/uploads/anggota", hint: "Foto anggota" }
 
   # ============================================
   # SETTINGS: GLOBAL SITE SETTINGS

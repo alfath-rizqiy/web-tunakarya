@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Decap CMS for Tunakarya",
   "scripts": {
+    "build": "mkdir -p dist && cp -r *.html *.yml dist/ 2>/dev/null || true",
     "dev": "concurrently \"npx decap-server\" \"npx serve . -p 8080\"",
     "cms": "npx decap-server",
     "ui": "npx serve . -p 8080"

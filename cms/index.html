@@ -5,21 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tunakarya CMS</title>
   <meta name="description" content="CMS untuk mengelola konten website Tunakarya">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
   <!-- Decap CMS -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
   <script>
-    // Konfigurasi tambahan untuk GitHub OAuth
-    // Pastikan CMS menggunakan branch 'patt' untuk commit
-    CMS.registerEventListener({
-      name: 'prePublish',
-      handler: ({ entry }) => {
-        console.log('Publishing entry:', entry.get('slug'));
-        return entry;
+    // Handle OAuth callback from GitHub
+    if (window.location.hash && window.location.hash.includes('access_token')) {
+      // Netlify Identity will handle the token
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', user => {
+          if (!user) {
+            window.netlifyIdentity.on('login', () => {
+              document.location.href = '/';
+            });
+          }
+        });
       }
-    });
+    }
+
+    // Register event listeners untuk logging
+    if (typeof CMS !== 'undefined') {
+      CMS.registerEventListener({
+        name: 'prePublish',
+        handler: ({ entry }) => {
+          console.log('Publishing entry:', entry.get('slug'));
+          return entry;
+        }
+      });
+
+      CMS.registerEventListener({
+        name: 'preSave',
+        handler: ({ entry }) => {
+          console.log('Saving entry:', entry.get('slug'));
+          return entry;
+        }
+      });
+    }
+
+    // Initialize Netlify Identity
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.init();
+    }
   </script>
 </body>
 </html>
