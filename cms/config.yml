@@ -4,7 +4,7 @@ backend:
   name: github
   repo: alfath-rizqiy/web-tunakarya
   branch: patt
-  base_url: https://YOUR-CMS-VERCEL-URL.vercel.app
+  base_url: https://cms-staging-000111.vercel.app
   auth_endpoint: api/auth
 
 # CMS di-deploy dari branch 'cms', tapi commit ke branch 'patt'
