@@ -63,7 +63,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li><a href="#" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 flex items-center gap-2">→ Panduan Pendaftaran</a></li>
               <li><a href="#" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 flex items-center gap-2">→ Kegiatan Kami</a></li>
-              <li><a href="#" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 flex items-center gap-2">→ Galeri Foto</a></li>
+              <li><a href="/galeri" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 flex items-center gap-2">→ Galeri Foto</a></li>
               <li><a href="#" className="text-gray-600 hover:text-primary-600 transition-colors duration-300 flex items-center gap-2">→ Dokumentasi</a></li>
             </ul>
           </div>

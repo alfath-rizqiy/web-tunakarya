@@ -14,6 +14,29 @@ public_folder: "/uploads"
 
 collections:
   # ============================================
+  # COLLECTION: GALERI FOTO
+  # Komponen Frontend: Galeri.jsx
+  # Props: title, image, kategori, description, order, active
+  # ============================================
+  - name: "galeri"
+    label: "Galeri Foto"
+    folder: "content/galeri"
+    create: true
+    slug: "{{title}}"
+    sortable_fields: ['order', 'title', 'kategori']
+    view_filters:
+      - label: Aktif
+        field: active
+        pattern: true
+    fields:
+      - { label: "Judul Foto", name: "title", widget: "string", required: true, hint: "Judul atau keterangan singkat foto" }
+      - { label: "Foto", name: "image", widget: "image", required: true, media_folder: "/public/uploads/galeri", hint: "Upload foto kegiatan" }
+      - { label: "Kategori", name: "kategori", widget: "string", required: false, hint: "Contoh: PECABA, Pelantikan, Kegiatan, dll", default: "Kegiatan" }
+      - { label: "Deskripsi", name: "description", widget: "text", required: false, hint: "Keterangan tambahan foto (opsional)" }
+      - { label: "Urutan Tampilan", name: "order", widget: "number", value_type: "int", default: 0, min: 0 }
+      - { label: "Tampilkan di Website", name: "active", widget: "boolean", default: true }
+
+  # ============================================
   # COLLECTION: HERO / HOME SECTION
   # Komponen Frontend: Home.jsx
   # Props: title, subtitle, description, maskot_image
