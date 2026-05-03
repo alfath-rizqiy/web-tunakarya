@@ -1,0 +1,55 @@
+name: Sync Content Manifests
+
+# Jalan otomatis setiap ada push ke branch patt
+# (termasuk commit dari CMS Decap/Netlify)
+on:
+  push:
+    branches:
+      - patt
+    paths:
+      - 'web-tunakarya/public/content/**/*.md'
+
+jobs:
+  generate-manifests:
+    runs-on: ubuntu-latest
+    
+    # Hindari loop: skip jika commit dari GitHub Actions bot
+    if: "!contains(github.event.head_commit.message, '[skip ci]') && github.actor != 'github-actions[bot]'"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: patt
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate manifests
+        run: node web-tunakarya/scripts/generate-manifests.js
+
+      - name: Fix wrong upload paths in .md files
+        run: |
+          # Fix path foto yang salah: hapus prefix "web-tunakarya/public" dari nilai field
+          find web-tunakarya/public/content -name "*.md" -exec \
+            sed -i 's|: web-tunakarya/public/uploads/|: /uploads/|g' {} \;
+          
+          # Hapus folder upload yang salah path jika ada
+          find web-tunakarya/public/content -type d -name "web-tunakarya" -exec rm -rf {} + 2>/dev/null || true
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git diff --quiet && echo "no_changes=true" >> $GITHUB_OUTPUT || echo "no_changes=false" >> $GITHUB_OUTPUT
+
+      - name: Commit and push if changed
+        if: steps.check_changes.outputs.no_changes == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add web-tunakarya/public/content/
+          git commit -m "chore: auto-update manifests and fix paths [skip ci]"
+          git push origin patt
