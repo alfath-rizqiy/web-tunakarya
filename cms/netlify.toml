@@ -1,16 +1,7 @@
 [build]
-  command = "mkdir -p dist && cp -r *.html *.yml *.js dist/ 2>/dev/null || true"
-  publish = "dist"
-
-[context.production]
-  environment = { INCOMING_HOOK_TITLE = "Build hook" }
+  publish = "."
 
 [[redirects]]
-  from = "/"
+  from = "/*"
   to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
   status = 200
